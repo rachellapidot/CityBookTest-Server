@@ -7,7 +7,7 @@ namespace Weather.App.Implementations
 {
     public class WeatherService : IWeatherService
     {
-        private readonly string apiKey = "l0fm4Em4HNhpAWXCmRpAeYK6MycjAflD";
+        private readonly string apiKey = "wVm14SlR9plziUb38spyIfMfDF9SosW2";
 
         private readonly string baseUrl = "http://dataservice.accuweather.com/";
 

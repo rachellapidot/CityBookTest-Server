@@ -8,29 +8,14 @@ namespace Weather.App.Model
     public class SearchResultModel
     {
 
-        public SearchResultModel(string version, string key, string type, int rank, string localizedName, Localization country, Localization administrativeArea)
+        public SearchResultModel(string key,string localizedName)
         {
-            Version = version;
             Key = key;
-            Type = type;
-            Rank = rank;
-            LocalizedName = localizedName;
-            Country = country;
-            AdministrativeArea = administrativeArea;
+            LocalizedName = localizedName;      
         }
-
-        public string Version { get; set; }
 
         public string Key { get; set; }
 
-        public string Type { get; set; }
-
-        public int Rank { get; set; }
-
         public string LocalizedName { get; set; }
-
-        public Localization Country { get; set; }
-
-        public Localization AdministrativeArea { get; set; }
     }
 }
