@@ -1,7 +1,10 @@
 ﻿using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using Weather.App.Domain.Cotext;
+using Weather.App.Domain.Model;
 using Weather.App.Interfaces;
 using Weather.App.Model;
+using System.Linq;
 
 namespace Weather.App.Implementations
 {
@@ -13,11 +16,14 @@ namespace Weather.App.Implementations
 
         private readonly ICacheService cacheService;
 
+        private readonly IRepository repository;
+
         static HttpClient client = new HttpClient();
 
-        public WeatherService(ICacheService _cacheService)
+        public WeatherService(ICacheService _cacheService, IRepository _repository)
         {
             cacheService = _cacheService;
+            repository = _repository;
         }
         public async Task<List<SearchResultModel>> Search(string query)
         {
@@ -58,6 +64,32 @@ namespace Weather.App.Implementations
             }
 
             return cityWeather;
+        }
+
+
+        public async Task<int>  AddFavorite(Favorite f)
+        {
+            FavoriteCities favorite = new FavoriteCities();
+            favorite.CityKey = f.CityKey;
+            favorite.CityName = f.CityName;
+
+             return await repository.Insert(favorite);
+        }
+
+        public Task<List<Favorite>> GetFavorites()
+        {
+            List<FavoriteCities> favorites = repository.GetAll();
+            List<Favorite> favoriteList = new List<Favorite>();
+            favorites.ForEach(favorite =>
+            {
+                Favorite c = new Favorite();
+                c.Id = favorite.Id;
+                c.CityName = favorite.CityName;
+                c.CityKey = favorite.CityKey;
+                favoriteList.Add(c);
+            });
+            return Task.FromResult(favoriteList);
+
         }
 
 

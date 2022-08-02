@@ -10,5 +10,9 @@ namespace Weather.App.Interfaces
         Task<List<SearchResultModel>> Search(string query);
 
         Task<CurrentWeatherModel> GetCurrentWeather(string cityKey);
+
+        Task<int> AddFavorite(Favorite f);
+
+        Task<List<Favorite>> GetFavorites();
     }
 }

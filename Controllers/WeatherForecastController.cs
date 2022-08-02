@@ -43,5 +43,33 @@ namespace Weather.App.Controllers
                 return BadRequest(new { message = "Error getting city weather: " + ex.Message });
             }
         }
+
+        [HttpPost]
+        [Route("favorite")]
+        public async Task<ActionResult<int>> AddFavorite([FromBody]Favorite f)
+        {
+            try
+            {
+                return Ok(await _weatherService.AddFavorite(f));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Error saving favorite: " + ex.Message });
+            }
+        }
+
+        [HttpGet]
+        [Route("favorite")]
+        public async Task<ActionResult<int>> GetFavorites()
+        {
+            try
+            {
+                return Ok(await _weatherService.GetFavorites());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Error getting favorites: " + ex.Message });
+            }
+        }
     }
 }

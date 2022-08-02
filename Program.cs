@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Caching.Memory;
+using Weather.App.Domain.Cotext;
 using Weather.App.Implementations;
 using Weather.App.Interfaces;
 
@@ -13,6 +14,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddSingleton<ICacheService, CacheService>();
+builder.Services.AddDbContext<WeatherDbContext>();
+builder.Services.AddTransient<IRepository>(provider =>
+                new Repository(provider.GetService<WeatherDbContext>()));
 
 var app = builder.Build();
 
